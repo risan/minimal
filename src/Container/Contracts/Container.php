@@ -10,5 +10,7 @@ interface Container extends InteropContainerContract
 
     public function singleton($abstract, $concrete = null);
 
+    public function register($provider);
+
     public function make($abstract, array $parameters = []);
 }

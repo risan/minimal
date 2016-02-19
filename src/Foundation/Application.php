@@ -2,7 +2,9 @@
 
 namespace Minimal\Foundation;
 
-class Application
+use Minimal\Container\Container;
+
+class Application extends Container
 {
 
 }

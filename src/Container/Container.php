@@ -38,6 +38,13 @@ class Container extends BaseContainer implements ArrayAccess, ContainerContract
         return $this->bind($abstract, $concrete, true);
     }
 
+    public function register($provider)
+    {
+        $this->addServiceProvider($provider);
+
+        return $this;
+    }
+
     public function make($abstract, array $parameters = [])
     {
         return $this->get($abstract, $parameters);
