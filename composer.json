@@ -1,0 +1,25 @@
+{
+	"name": "risan/minimal",
+	"type": "library",
+	"description": "Minimal and lightweight PHP framework.",
+	"keywords": ["framework", "minimal", "lightweight"],
+	"homepage": "https://github.com/risan/minimal",
+	"license": "MIT",
+	"authors": [
+		{
+	    	"name": "Risan Bagja Pradana",
+	    	"email": "risanbagja@gmail.com",
+	    	"homepage": "https://github.com/risan",
+	    	"role": "Developer"
+	    }
+	],
+	"autoload": {
+	    "psr-4": {
+	    	"Minimal\\": "src/"
+	    }
+	},
+    "require": {
+        "nikic/fast-route": "^0.7.0",
+		"league/container": "^2.0"
+    }
+}
