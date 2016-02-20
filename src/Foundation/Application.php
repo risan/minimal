@@ -3,17 +3,27 @@
 namespace Minimal\Foundation;
 
 use Minimal\Container\Container;
+use Minimal\Routing\RouteDispatcher;
 use Minimal\Foundation\Contracts\Application as ApplicationContract;
 
 class Application extends Container implements ApplicationContract
 {
     protected $basePath;
 
+    protected $coreServiceProviders = [
+        \Minimal\Http\HttpServiceProvider::class,
+        \Minimal\Routing\RoutingServiceProvider::class,
+    ];
+
     public function __construct($basePath = null)
     {
+        parent::__construct();
+
         if ( ! is_null($basePath)) {
             $this->setBasePath($basePath);
         }
+
+        $this->bootstrap();
     }
 
     public function basePath()
@@ -26,5 +36,22 @@ class Application extends Container implements ApplicationContract
         $this->basePath = rtrim($basePath, '\/');
 
         return $this;
+    }
+
+    public function bootstrap()
+    {
+        $this->registerCoreServiceProviders();
+    }
+
+    public function registerCoreServiceProviders()
+    {
+        foreach ($this->coreServiceProviders() as $provider) {
+            $this->register($provider);
+        }
+    }
+
+    public function coreServiceProviders()
+    {
+        return $this->coreServiceProviders;
     }
 }

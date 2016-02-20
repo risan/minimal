@@ -20,6 +20,7 @@
 	},
     "require": {
         "nikic/fast-route": "^0.7.0",
-		"league/container": "^2.0"
+		"league/container": "^2.0",
+		"symfony/http-foundation": "^3.0"
     }
 }

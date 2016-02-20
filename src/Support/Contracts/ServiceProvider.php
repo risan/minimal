@@ -7,5 +7,5 @@ use League\Container\ServiceProvider\BootableServiceProviderInterface as LeagueB
 
 interface ServiceProvider extends LeagueServiceProviderContract, LeagueBootableServiceProviderContract
 {
-
+    public function app();
 }

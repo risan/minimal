@@ -2,22 +2,12 @@
 
 namespace Minimal\Routing;
 
-use FastRoute\RouteCollector;
-use Minimal\Routing\Contacts\Routing as RoutingContract;
+use FastRoute\RouteCollector as FastRouteCollector;
+use Minimal\Routing\Contracts\Router as RouterContract;
 
-class Router implements RoutingContract
+class Router extends FastRouteCollector implements RouterContract
 {
-    protected $routeCollector;
-
-    public function __construct(RouteCollector $routeCollector)
-    {
-        $this->routeCollector = $routeCollector;
-    }
-
-    public function routeCollector()
-    {
-        return $this->routeCollector;
-    }
+    protected $data;
 
     public function get($uri, $action)
     {
@@ -54,15 +44,5 @@ class Router implements RoutingContract
         $verbs = ['GET', 'HEAD', 'POST', 'PUT', 'PATCH', 'DELETE'];
 
         $this->addRoute($verbs, $uri, $action);
-    }
-
-    public function addRoute($methods, $uri, $action)
-    {
-        $this->routeCollector()->addRoute($methods, $uri, $action);
-    }
-
-    public function getData()
-    {
-        $this->routeCollector()->getData();
     }
 }

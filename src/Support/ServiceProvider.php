@@ -7,5 +7,13 @@ use League\Container\ServiceProvider\AbstractServiceProvider as LeagueServicePro
 
 abstract class ServiceProvider extends LeagueServiceProvider implements ServiceProviderContract
 {
+    public function app()
+    {
+        return $this->getContainer();
+    }
 
+    public function boot()
+    {
+        //
+    }
 }
