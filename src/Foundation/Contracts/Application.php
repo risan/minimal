@@ -13,4 +13,6 @@ interface Application
     public function coreServiceProviders();
 
     public function registerCoreServiceProviders();
+
+    public function start();
 }

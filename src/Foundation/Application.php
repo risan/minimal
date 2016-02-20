@@ -54,4 +54,15 @@ class Application extends Container implements ApplicationContract
     {
         return $this->coreServiceProviders;
     }
+
+    public function start()
+    {
+        $httpKernel = $this->make('Minimal\Http\Contracts\HttpKernel');
+
+        $response = $httpKernel->handle($this['request']);
+
+        $response->prepare($this['request']);
+
+        $response->send();
+    }
 }
