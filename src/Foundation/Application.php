@@ -4,6 +4,7 @@ namespace Minimal\Foundation;
 
 use Minimal\Container\Container;
 use Minimal\Routing\RouteDispatcher;
+use League\Container\ReflectionContainer;
 use Minimal\Foundation\Contracts\Application as ApplicationContract;
 
 class Application extends Container implements ApplicationContract
@@ -22,6 +23,8 @@ class Application extends Container implements ApplicationContract
         if ( ! is_null($basePath)) {
             $this->setBasePath($basePath);
         }
+
+        $this->delegate(new ReflectionContainer);
 
         $this->bootstrap();
     }

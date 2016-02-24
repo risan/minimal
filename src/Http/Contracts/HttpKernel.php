@@ -7,9 +7,9 @@ use Minimal\Http\Contracts\Request as RequestContract;
 
 interface HttpKernel
 {
-    public function app();
-
     public function routeDispatcher();
+
+    public function callableResolver();
 
     public function handle(RequestContract $request);
 }

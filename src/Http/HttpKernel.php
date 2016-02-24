@@ -2,31 +2,34 @@
 
 namespace Minimal\Http;
 
-use Minimal\Foundation\Application;
 use Minimal\Routing\RouteDispatcher;
 use Minimal\Http\Exception\NotFoundHttpException;
 use Minimal\Http\Contracts\Request as RequestContract;
 use Minimal\Http\Exception\MethodNotAllowedHttpException;
 use Minimal\Http\Contracts\HttpKernel as HttpKernelContract;
 use Minimal\Routing\Contracts\RouteDispatcher as RouteDispatcherContract;
+use Minimal\Routing\Contracts\CallableResolver as CallableResolverContract;
 
 class HttpKernel implements HttpKernelContract
 {
-    protected $app;
+    protected $routeDispatcher;
 
-    public function __construct(Application $app)
-    {
-        $this->app = $app;
-    }
+    protected $callableResolver;
 
-    public function app()
+    public function __construct(RouteDispatcherContract $routeDispatcher, CallableResolverContract $callableResolver)
     {
-        return $this->app;
+        $this->routeDispatcher = $routeDispatcher;
+        $this->callableResolver = $callableResolver;
     }
 
     public function routeDispatcher()
     {
-        return $this->app->make('Minimal\Routing\Contracts\RouteDispatcher');
+        return $this->routeDispatcher;
+    }
+
+    public function callableResolver()
+    {
+        return $this->callableResolver;
     }
 
     public function handle(RequestContract $request)
@@ -40,11 +43,10 @@ class HttpKernel implements HttpKernelContract
                 $allowedMethods = $routeInfo[1];
                 throw new MethodNotAllowedHttpException;
             case RouteDispatcher::FOUND:
-                $action = $routeInfo[1];
+                $callable = $routeInfo[1];
+                $args = $routeInfo[2];
 
-                $args = array_merge([$this->app()['request'], $this->app()['response']], $routeInfo[2]);
-
-                return call_user_func_array($action, $args);
+                return $this->callableResolver()->resolve($callable, $args);
         }
     }
 }

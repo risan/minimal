@@ -38,7 +38,10 @@ class HttpServiceProvider extends ServiceProvider
     protected function registerHttpKernel()
     {
         $this->app()->bind('Minimal\Http\Contracts\HttpKernel', function () {
-            return new HttpKernel($this->app());
+            $routeDispatcher = $this->app()->make('Minimal\Routing\Contracts\RouteDispatcher');
+            $callableResolver = $this->app()->make('Minimal\Routing\Contracts\CallableResolver');
+
+            return new HttpKernel($routeDispatcher, $callableResolver);
         });
     }
 }

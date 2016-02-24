@@ -11,6 +11,7 @@ class RoutingServiceProvider extends ServiceProvider
     protected $provides = [
         'router',
         'Minimal\Routing\Contracts\RouteDispatcher',
+        'Minimal\Routing\Contracts\CallableResolver',
     ];
 
     public function register()
@@ -18,6 +19,8 @@ class RoutingServiceProvider extends ServiceProvider
         $this->registerRouter();
 
         $this->registerRouteDispatcher();
+
+        $this->registerCallableResolver();
     }
 
     protected function registerRouter()
@@ -31,6 +34,13 @@ class RoutingServiceProvider extends ServiceProvider
     {
         $this->app()->singleton('Minimal\Routing\Contracts\RouteDispatcher', function () {
             return new RouteDispatcher($this->app()['router']);
+        });
+    }
+
+    protected function registerCallableResolver()
+    {
+        $this->app()->singleton('Minimal\Routing\Contracts\CallableResolver', function () {
+            return new CallableResolver($this->app());
         });
     }
 }
