@@ -9,6 +9,7 @@ class HttpServiceProvider extends ServiceProvider
     protected $provides = [
         'request',
         'response',
+        'Minimal\Http\Request',
         'Minimal\Http\Contracts\HttpKernel',
     ];
 
@@ -23,8 +24,12 @@ class HttpServiceProvider extends ServiceProvider
 
     protected function registerRequest()
     {
-        $this->app()->bind('request', function () {
+        $this->app()->bind('Minimal\Http\Request', function () {
             return Request::capture();
+        });
+
+        $this->app()->bind('request', function () {
+            return $this->app()->make('Minimal\Http\Request');
         });
     }
 
