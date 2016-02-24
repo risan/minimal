@@ -31,6 +31,8 @@ class Container extends BaseContainer implements ArrayAccess, ContainerContract
     public function bind($abstract, $concrete = null, $shared = false)
     {
         $this->add($abstract, $concrete, $shared);
+
+        return $this;
     }
 
     public function singleton($abstract, $concrete = null)
