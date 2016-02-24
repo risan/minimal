@@ -30,6 +30,7 @@ class RouteDispatcher extends FastRouteDispatcher implements RouteDispatcherCont
 
     public function setRouteMapAndData()
     {
-        list($this->staticRouteMap, $this->variableRouteData) = $this->router()->getData();
+        $this->staticRouteMap = $this->router()->staticRouteMap();
+        $this->variableRouteData = $this->router()->variableRouteData();
     }
 }

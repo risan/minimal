@@ -13,4 +13,6 @@ interface Router
     public function any($uri, $action);
     public function addRoute($methods, $uri, $action);
     public function getData();
+    public function staticRouteMap();
+    public function variableRouteData();
 }

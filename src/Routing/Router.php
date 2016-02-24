@@ -45,4 +45,23 @@ class Router extends FastRouteCollector implements RouterContract
 
         $this->addRoute($verbs, $uri, $action);
     }
+
+    public function getData()
+    {
+        if (is_null($this->data)) {
+            $this->data = parent::getData();
+        }
+
+        return $this->data;
+    }
+
+    public function staticRouteMap()
+    {
+        return $this->getData()[0];
+    }
+
+    public function variableRouteData()
+    {
+        return $this->getData()[1];
+    }
 }
