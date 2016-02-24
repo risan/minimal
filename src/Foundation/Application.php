@@ -43,16 +43,16 @@ class Application extends Container implements ApplicationContract
         $this->registerCoreServiceProviders();
     }
 
+    public function coreServiceProviders()
+    {
+        return $this->coreServiceProviders;
+    }
+
     public function registerCoreServiceProviders()
     {
         foreach ($this->coreServiceProviders() as $provider) {
             $this->register($provider);
         }
-    }
-
-    public function coreServiceProviders()
-    {
-        return $this->coreServiceProviders;
     }
 
     public function start()
