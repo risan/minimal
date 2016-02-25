@@ -31,6 +31,33 @@ class ContainerTest extends PHPUnit_Framework_TestCase {
     {
         $this->assertInstanceOf(FooBar::class, $this->container['fooBar']);
     }
+
+    /**
+     * @test
+     * @expectedException League\Container\Exception\NotFoundException
+     */
+    function container_throws_exception_when_accessing_non_existed_service()
+    {
+        $this->container['notExists'];
+    }
+
+    /** @test */
+    function container_can_set_a_service()
+    {
+        $this->container->offsetSet('baz', new FooBar);
+
+        $this->assertInstanceOf(FooBar::class, $this->container['baz']);
+    }
+
+    /** @test */
+    function container_can_unset_a_service()
+    {
+        $this->container->offsetSet('baz', new FooBar);
+
+        $this->container->offsetUnset('baz');
+
+        $this->assertFalse($this->container->offsetExists('baz'));
+    }
 }
 
 class FooBar
