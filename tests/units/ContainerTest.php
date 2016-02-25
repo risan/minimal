@@ -1,6 +1,7 @@
 <?php
 
 use Minimal\Container\Container;
+use Minimal\Support\ServiceProvider;
 
 class ContainerTest extends PHPUnit_Framework_TestCase {
     protected $container;
@@ -68,9 +69,51 @@ class ContainerTest extends PHPUnit_Framework_TestCase {
 
         $this->assertInstanceOf(FooBar::class, $this->container['baz']);
     }
+
+    /** @test */
+    function container_can_bind_singleton_service()
+    {
+        $this->container->singleton('baz', function () {
+            return new FooBar;
+        });
+
+        $baz1 = $this->container['baz'];
+        $baz2 = $this->container['baz'];
+
+        $this->assertInstanceOf(FooBar::class, $baz1);
+        $this->assertEquals($baz1, $baz2);
+    }
+
+    /** @test */
+    function container_can_register_service_provider()
+    {
+        $this->container->register(new QuxServiceProvider);
+
+        $this->assertInstanceOf(FooBar::class, $this->container['qux']);
+    }
+
+    /** @test */
+    function container_can_make_service_instance()
+    {
+        $fooBar = $this->container->make('fooBar');
+
+        $this->assertInstanceOf(FooBar::class, $fooBar);
+    }
 }
 
 class FooBar
 {
     //
+}
+
+class QuxServiceProvider extends ServiceProvider
+{
+    protected $provides = ['qux'];
+
+    public function register()
+    {
+        $this->app()->bind('qux', function () {
+            return new FooBar;
+        });
+    }
 }
