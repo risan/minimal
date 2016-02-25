@@ -22,13 +22,13 @@ class RouteDispatcherTest extends PHPUnit_Framework_TestCase {
     }
 
     /** @test */
-    public function router_dispatcher_can_retrieve_router_instance()
+    public function route_dispatcher_can_retrieve_router_instance()
     {
         $this->assertInstanceOf(Router::class, $this->routeDispatcher->router());
     }
 
     /** @test */
-    public function router_dispatcher_can_dispatch_with_request()
+    public function route_dispatcher_can_dispatch_with_request()
     {
         $request = m::mock(Request::class);
 
@@ -44,7 +44,7 @@ class RouteDispatcherTest extends PHPUnit_Framework_TestCase {
     }
 
     /** @test */
-    public function router_dispatcher_can_set_route_map_and_data()
+    public function route_dispatcher_can_set_route_map_and_data()
     {
         $this->router->shouldReceive('staticRouteMap')->once()->andReturn([]);
 
