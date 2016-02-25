@@ -58,6 +58,16 @@ class ContainerTest extends PHPUnit_Framework_TestCase {
 
         $this->assertFalse($this->container->offsetExists('baz'));
     }
+
+    /** @test */
+    function container_can_bind_service()
+    {
+        $this->container->bind('baz', function () {
+            return new FooBar;
+        });
+
+        $this->assertInstanceOf(FooBar::class, $this->container['baz']);
+    }
 }
 
 class FooBar
