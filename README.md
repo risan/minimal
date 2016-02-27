@@ -80,5 +80,4 @@ class MyController
         return $response->setContent(sprintf('Hello %s.', $name));
     }
 }
-}
 ```
